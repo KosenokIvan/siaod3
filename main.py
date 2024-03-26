@@ -1,4 +1,5 @@
 from copy import deepcopy
+from math import inf
 
 
 def floyd_warshall(graph_):
