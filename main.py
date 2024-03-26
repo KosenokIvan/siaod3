@@ -65,7 +65,7 @@ def measure_time(func_, graph_):
 
 
 def main():
-    files = ["input1.txt", "input2.txt", "input3.txt", "input4.txt", "input5.txt"]
+    files = ["input1.txt", "input2.txt", "input3.txt", "input4.txt", "input5.txt", "input6.txt"]
     for filename in files:
         measure_time(floyd_warshall, read_from_file(filename))
 
