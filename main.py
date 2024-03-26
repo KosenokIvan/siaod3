@@ -1,5 +1,7 @@
 from copy import deepcopy
 from math import inf
+from pprint import pprint
+import time
 
 
 def floyd_warshall(graph_):
@@ -54,8 +56,18 @@ def read_as_incidence_matrix(lines):
     return matrix
 
 
+def measure_time(func_, graph_):
+    start_time = time.time()
+    print("=" * 30)
+    pprint(graph_)
+    pprint(func_(graph_))
+    print("--- {0} ms ---".format(round((time.time() - start_time) * 1000)))
+
+
 def main():
-    print(*floyd_warshall(read_from_file("input1.txt")), sep="\n")
+    files = ["input1.txt", "input2.txt", "input3.txt", "input4.txt", "input5.txt"]
+    for filename in files:
+        measure_time(floyd_warshall, read_from_file(filename))
 
 
 if __name__ == '__main__':
