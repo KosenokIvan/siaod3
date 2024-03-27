@@ -1,7 +1,10 @@
 from copy import deepcopy
-from math import inf
+from math import inf, isinf
 from pprint import pprint
 import time
+import numpy as np
+import networkx as nx
+import matplotlib.pyplot as plt
 
 
 def floyd_warshall(graph_):
@@ -56,11 +59,28 @@ def read_as_incidence_matrix(lines):
     return matrix
 
 
+def making_nx_graph(graph_):
+    graph_nx = nx.DiGraph()
+    for i, row in enumerate(graph_):
+        for j, el in enumerate(row):
+            if isinf(el):
+                el = 0
+            if el != 0:
+                graph_nx.add_edge(i, j, weight=el)
+    return graph_nx
+
+
 def measure_time(func_, graph_):
     start_time = time.time()
     print("=" * 30)
     pprint(graph_)
     pprint(func_(graph_))
+    graph_nx = making_nx_graph(graph_)
+    pos = nx.spring_layout(graph_nx)
+    nx.draw(graph_nx, pos, with_labels=True)
+    labels = nx.get_edge_attributes(graph_nx, 'weight')
+    nx.draw_networkx_edge_labels(graph_nx, pos, edge_labels=labels)
+    plt.show()
     print("--- {0} ms ---".format(round((time.time() - start_time) * 1000)))
 
 
